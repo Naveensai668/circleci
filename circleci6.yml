@@ -1,0 +1,25 @@
+version: 2.1  # CircleCI config version
+
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.9  # Change version as per your project
+    steps:
+      - checkout  # Checkout the code from the repo
+      - run:
+          name: Install dependencies
+          command: |
+            python -m venv venv
+            source venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Run Tests
+          command: |
+            source venv/bin/activate
+            pytest tests/  # Change if using another test framework
+
+workflows:
+  version: 2
+  test_pipeline:
+    jobs:
+      - test
